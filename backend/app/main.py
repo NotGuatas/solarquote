@@ -12,7 +12,7 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
 from app.core.config import settings
-from app.routers import health
+from app.routers import auth, health
 
 app = FastAPI(
     title=settings.APP_NAME,
@@ -34,9 +34,9 @@ app.add_middleware(
 
 # ─── Rutas ──────────────────────────────────────────────
 app.include_router(health.router)
+app.include_router(auth.router, prefix="/api/auth", tags=["Autenticación"])
 
 # A medida que avancemos, cada módulo registra su router aquí:
-# app.include_router(auth.router,       prefix="/api/auth",      tags=["Autenticación"])
 # app.include_router(layout.router,     prefix="/api/layout",    tags=["Módulo 1 — Layout"])
 # app.include_router(boceto.router,     prefix="/api/boceto",    tags=["Módulo 2 — Boceto"])
 # app.include_router(cotizacion.router, prefix="/api/cotizacion",tags=["Módulo 3 — Cotización"])
