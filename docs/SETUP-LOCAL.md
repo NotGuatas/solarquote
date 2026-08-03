@@ -1,7 +1,6 @@
 # Setup del entorno local
 
 Guía para dejar el backend corriendo en tu máquina.
-**Los dos (Joseph y Esteban) deben hacer esto.**
 
 ---
 
@@ -24,7 +23,7 @@ Un *entorno virtual* (venv) es una carpeta aislada con las librerías de este
 proyecto. Evita que se mezclen con las de otros proyectos de tu compu.
 
 ```bash
-cd "C:\Users\ROG\Desktop\SolarQuote\SolarQuote\solarquote\backend"
+cd "C:\.....\SolarQuote\SolarQuote\solarquote\backend"
 ```
 
 ```bash
@@ -149,17 +148,6 @@ frontend ni usar Postman.
 
 ---
 
-## Checklist
-
-- [ ] Python 3.11+ instalado y en el PATH
-- [ ] Entorno virtual creado (`venv/`)
-- [ ] Entorno virtual activado (se ve `(venv)` en el prompt)
-- [ ] Dependencias instaladas sin errores
-- [ ] Archivo `.env` creado con `SECRET_KEY` generada
-- [ ] Servidor arranca sin errores
-- [ ] http://localhost:8000/docs carga correctamente
-
----
 
 ## Problemas comunes
 
