@@ -1,0 +1,13 @@
+"""
+Registro central de modelos.
+
+IMPORTANTE: todo modelo nuevo debe importarse aquí.
+Alembic solo detecta las tablas de los modelos que estén en este archivo.
+"""
+
+from app.models.usuario import RolUsuario, Usuario
+
+__all__ = [
+    "Usuario",
+    "RolUsuario",
+]
