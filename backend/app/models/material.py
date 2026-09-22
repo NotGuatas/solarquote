@@ -11,7 +11,7 @@ una fila nueva en `PrecioMaterial` con su propia vigencia, y la fila
 from datetime import datetime
 from decimal import Decimal
 
-from sqlalchemy import Boolean, DateTime, ForeignKey, Numeric, String, func
+from sqlalchemy import Boolean, DateTime, ForeignKey, Index, Numeric, String, func, text
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 
 from app.core.database import Base
@@ -57,10 +57,22 @@ class Material(Base):
 class PrecioMaterial(Base):
     __tablename__ = "precios_material"
 
+    # Un solo precio vigente (vigente_hasta IS NULL) por material: si un bug
+    # de RF-09 llegara a insertar dos, el cálculo no sabría cuál usar.
+    __table_args__ = (
+        Index(
+            "ux_precio_vigente_por_material",
+            "material_id",
+            unique=True,
+            postgresql_where=text("vigente_hasta IS NULL"),
+        ),
+    )
+
     id: Mapped[int] = mapped_column(primary_key=True)
 
     material_id: Mapped[int] = mapped_column(
         ForeignKey("materiales.id"),
+        index=True,
         nullable=False,
     )
 
