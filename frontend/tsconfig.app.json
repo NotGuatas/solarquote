@@ -16,8 +16,9 @@
     "noEmit": true,
     "jsx": "react-jsx",
 
-    /* Alias de importación: "@/..." apunta a src/ */
-    "baseUrl": ".",
+    /* Alias de importación: "@/..." apunta a src/
+       Sin baseUrl: TypeScript 6 lo deprecó y `paths` ya se resuelve
+       relativo a la ubicación de este archivo. */
     "paths": {
       "@/*": ["./src/*"]
     },
