@@ -54,6 +54,26 @@ class Cotizacion(Base):
         nullable=False,
     )
 
+    # ─── Relación con los modelos compartidos ───────────────────────────
+    # Nullable a propósito: permite cotizar a un cliente que todavía no
+    # está en el catálogo (caso real: llamada rápida, se cotiza al vuelo).
+    # Los campos snapshot de abajo se llenan igual, y la FK se asocia después.
+    cliente_id: Mapped[int | None] = mapped_column(
+        ForeignKey("clientes.id"),
+        nullable=True,
+        index=True,
+    )
+
+    proyecto_id: Mapped[int | None] = mapped_column(
+        ForeignKey("proyectos.id"),
+        nullable=True,
+        index=True,
+    )
+
+    # ─── Snapshot de los datos del cliente ──────────────────────────────
+    # Se conservan aunque exista `cliente_id`. Una proforma es un documento
+    # comercial: si el cliente cambia de teléfono en marzo, la proforma
+    # emitida en enero debe seguir mostrando el teléfono de enero.
     cliente_nombre: Mapped[str] = mapped_column(String(150), nullable=False)
     cliente_empresa: Mapped[str | None] = mapped_column(String(150), nullable=True)
     cliente_email: Mapped[str | None] = mapped_column(String(255), nullable=True)
@@ -92,6 +112,9 @@ class Cotizacion(Base):
         cascade="all, delete-orphan",
         order_by="ItemCotizacion.id",
     )
+
+    cliente: Mapped["Cliente | None"] = relationship()  # noqa: F821
+    proyecto: Mapped["Proyecto | None"] = relationship()  # noqa: F821
 
     def __repr__(self) -> str:
         return f"<Cotizacion {self.id} {self.numero_proforma} ({self.estado.value})>"
